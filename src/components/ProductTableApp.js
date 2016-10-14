@@ -20,6 +20,8 @@ class ProductTableApp extends React.Component{
             filterText : ''
         }
 
+        this.onUserInputerHandler = this.onUserInputerHandler.bind(this)
+
     }
 
     onUserInputerHandler(stockChk, filterText){
@@ -31,12 +33,9 @@ class ProductTableApp extends React.Component{
     }
 
 	render(){
-
-        let style = {"background":"red"}
-
 		return(
-			<div style={style}>
-				<SearchBar stockChk={this.state.stockChk} filterText={this.state.filterText} onUserInput={this.onUserInputerHandler.bind(this)}/>
+			<div>
+				<SearchBar stockChk={this.state.stockChk} filterText={this.state.filterText} onUserInput={this.onUserInputerHandler}/>
 				<ProductTable products={productArry} filterText={this.state.filterText} stockChk={this.state.stockChk}  />
 			</div>
 		);
@@ -45,18 +44,23 @@ class ProductTableApp extends React.Component{
 
 class SearchBar extends React.Component{
 
+    constructor(){
+        super();
+        this.handlerChange = this.handlerChange.bind(this);
+    }
+
     handlerChange(){
         this.props.onUserInput(
-            $("#myChk").is(':checked'),
-            $("#myText").val()
+            this.refs.refChk.checked,
+            this.refs.refInput.value
         );
     }
 
 	render(){
 		return(
 			<form>
-                <input type="text" id="myText" placeholder="search" value={this.props.filterText} onChange={this.handlerChange.bind(this)}/> <br/>
-                <input type="checkbox" id="myChk" checked={this.props.stockChk}  onChange={this.handlerChange.bind(this)} />  재고만 보이기
+                <input type="text" id="myText" placeholder="search" value={this.props.filterText} ref="refInput"  onChange={this.handlerChange}/> <br/>
+                <input type="checkbox" id="myChk" checked={this.props.stockChk}  ref="refChk" onChange={this.handlerChange} />  재고만 보이기
             </form>
 		);
 	}
@@ -69,6 +73,7 @@ class ProductTable extends React.Component{
         let categoryChk = null;
 
 		this.props.products.forEach(function(data){
+
 			//console.log(data);
             if(data.category !== categoryChk){
                 rows.push(<ProductCategory products={data} key={data.category} />);
@@ -76,9 +81,9 @@ class ProductTable extends React.Component{
             if(this.props.stockChk && !data.stocked || data.name.indexOf(this.props.filterText) === -1){
                 return;
             }
-
 			rows.push(<ProductItem products={data} key={data.name} />);
             categoryChk = data.category;
+
 		}.bind(this));
 
 		return(
