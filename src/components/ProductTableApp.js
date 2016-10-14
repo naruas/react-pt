@@ -59,8 +59,8 @@ class SearchBar extends React.Component{
 	render(){
 		return(
 			<form>
-                <input type="text" id="myText" placeholder="search" value={this.props.filterText} ref="refInput"  onChange={this.handlerChange}/> <br/>
-                <input type="checkbox" id="myChk" checked={this.props.stockChk}  ref="refChk" onChange={this.handlerChange} />  재고만 보이기
+                <input type="text" placeholder="search" value={this.props.filterText} ref="refInput"  onChange={this.handlerChange}/> <br/>
+                <input type="checkbox" checked={this.props.stockChk}  ref="refChk" onChange={this.handlerChange} />  재고만 보이기
             </form>
 		);
 	}
