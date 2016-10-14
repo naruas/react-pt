@@ -8,5 +8,4 @@ React 15, Babel 6 and webpack on Node.js is used to setup the environment.
 - ``npm install`` - Install the dependency
 - ``npm start``  - Run the development server
 
-*Webpack-dev-Server's address is like this, http://localhost:7777/ 
-You can see the page after putting command 'npm start' on the Node.js
+*Webpack-dev-Server's address is like this, http://localhost:7777/
